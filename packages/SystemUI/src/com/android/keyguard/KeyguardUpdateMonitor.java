@@ -1095,7 +1095,9 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
                 if (maxChargingMicroAmp > 0) {
                     // Calculating muW = muA * muV / (10^6 mu^2 / mu); splitting up the divisor
                     // to maintain precision equally on both factors.
-                    maxChargingMicroWatt = (maxChargingMicroAmp / 1000)
+                    maxChargingMicroWatt = (maxChargingMicroAmp < 5 ?
+                          (maxChargingMicroAmp * 1000) : (maxChargingMicroAmp < 4000 ?
+                          maxChargingMicroAmp : (maxChargingMicroAmp / 1000)))
                             * (maxChargingMicroVolt / 1000);
                 } else {
                     maxChargingMicroWatt = -1;
